@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Digit extends StatefulWidget {
-  ValueNotifier digit = ValueNotifier<String>('0');
+  ValueNotifier number = ValueNotifier<String>('0');
 
-  Digit(this.digit);
+  Digit(String _number) {
+    this.number.value = _number.toUpperCase()[_number.length - 1];
+  }
 
 /* ###0###    - Bar
   #       #
@@ -54,19 +56,31 @@ class Digit extends StatefulWidget {
 }
 
 class DigitState extends State<Digit> {
+  // TODO: Implement adaptive size.
+  // double barHeight = Digit.BAR_HEIGHT;
+  // double barWidthFactor = Digit.WIDTH_FACTOR;
+  // double barRadius = Digit.BAR_RADIUS;
+  // MediaQueryData? mqd;
   List<bool>? opacity = <bool>[];
+  RegExp hexNumberSpace = RegExp(r'^[A-Fa-f0-9]+$');
 
   @override
   void initState() {
-    opacity = Digit.digitBars[widget.digit];
-    // print('Init Digit: ${widget.digit}: $opacity');
+    // FIXIT: For adaptive size
+    // mqd = MediaQuery.of(widget.context);
+    // print('Height: ${mqd!.size.height}, Width: ${mqd!.size.height}');
+    if (!hexNumberSpace.hasMatch(widget.number.value)) {
+      opacity = Digit.digitBars[widget.number.value];
+    } else {
+      opacity = Digit.digitBars[' '];
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: widget.digit,
+        valueListenable: widget.number,
         builder: (context, value, child) {
           opacity = Digit.digitBars[value];
           return Column(

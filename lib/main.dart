@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:math';
 
+import 'package:digit_widget/digit_spacer.dart';
+import 'package:digit_widget/multi_digit_display.dart';
 import 'package:flutter/material.dart';
 
 import 'digit.dart';
@@ -30,76 +33,42 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Timer? everySecond;
-  static String digitText = ' 0123456789ABCDEF-=_';
-  int number = 0;
-
-  void _nextDigit() {
-    setState(() {
-      number++;
-      if (number >= digitText.length) {
-        number = 0;
-      }
-    });
-  }
+  late Timer tick;
+  int number = 800;
 
   @override
   void initState() {
+    Random randomInt = Random();
+    tick = Timer.periodic(Duration(milliseconds: 75), (Timer t) {
+      setState(() {
+        number++; // = randomInt.nextInt(10000);
+      });
+    });
+
     super.initState();
 
-    everySecond = Timer.periodic(Duration(seconds: 1), (Timer t) {
-      setState(() {
-        number++;
-
-        if (number >= digitText.length) {
-          number = 0;
-        }
-      });
+    setState(() {
+      number = 950;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Digit(ValueNotifier<String>(digitText[number])),
-          SizedBox(
-            height: 50,
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Row(children: [
+        Text(
+          number.toRadixString(10),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 40,
           ),
-          ElevatedButton(
-              onPressed: _nextDigit, child: const Icon(Icons.navigate_next))
-        ]));
+        ),
+        Spacer(),
+        multiDigitDisplay(number, radix: 10),
+      ]),
+    );
   }
 }
-
-//             Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-//           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-//             Digit(' '),
-//             Digit('0'),
-//             Digit('1'),
-//             Digit('2'),
-//             Digit('3'),
-//             Digit('4'),
-//             Digit('5'),
-//             Digit('6'),
-//             Digit('7'),
-//             Digit('8'),
-//           ]),
-//           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-//             Digit('9'),
-//             Digit('A'),
-//             Digit('B'),
-//             Digit('C'),
-//             Digit('D'),
-//             Digit('E'),
-//             Digit('F'),
-//             Digit('-'),
-//             Digit('='),
-//             Digit('_'),
-//           ])
-//         ]));
-//   }
-// }
