@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     Random randomInt = Random();
-    tick = Timer.periodic(Duration(seconds: 1), (Timer t) {
+    tick = Timer.periodic(Duration(milliseconds: 1), (Timer t) {
       setState(() {
         number++;
       });
@@ -56,12 +56,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
+      body:
         // Digit(number.toRadixString(10), height:20, foreGroundColor: Colors.amber, backGroundColor: Colors.grey,),
-        multiDigitDisplay(number, radix: 10),
-      ]),
+          multiDigitDisplay(number, context, radix: 10),
     );
   }
 }
