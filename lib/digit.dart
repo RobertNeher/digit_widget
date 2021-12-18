@@ -7,16 +7,18 @@ const Color BACKGROUND = Colors.grey;
 
 class Digit extends StatefulWidget {
   ValueNotifier number = ValueNotifier<String>('0');
+  late BuildContext context;
   double digitHeight = 0;
   late Color foreGroundColor;
   late Color backGroundColor;
   late double barRadius = 0;
 
-  Digit(String _number,
+  Digit(String _number, BuildContext context,
       {double height = BAR_HEIGHT,
       Color foreGroundColor = FOREGROUND,
       Color backGroundColor = BACKGROUND,
       double barRadius = 0}) {
+    this.context = context;
     this.number.value = _number.toUpperCase()[_number.length - 1];
     this.digitHeight = height / 3;
     this.foreGroundColor = foreGroundColor;
@@ -67,15 +69,14 @@ class Digit extends StatefulWidget {
 }
 
 class DigitState extends State<Digit> {
-  // TODO: Implement adaptive size.
+  late Size size;
   List<bool>? opacity = <bool>[];
   RegExp hexNumberSpace = RegExp(r'^[A-Fa-f0-9]+$');
 
   @override
   void initState() {
-    // FIXIT: For adaptive size
-    // mqd = MediaQuery.of(widget.context);
-    // print('Height: ${mqd!.size.height}, Width: ${mqd!.size.height}');
+    size = MediaQuery.of(widget.context).size;
+    widget.digitHeight = size.height / 2;
     if (!hexNumberSpace.hasMatch(widget.number.value)) {
       opacity = Digit.digitBars[widget.number.value];
     } else {

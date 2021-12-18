@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'digit.dart';
 import 'digit_spacer.dart';
 
-Widget multiDigitDisplay(int number,
+Widget multiDigitDisplay(int number, BuildContext context,
     {int radix = 10, int digitCount = 2, bool dynamicRange = false}) {
   String _number = number.toRadixString(radix).toUpperCase();
 
   return Container(
       // padding: const EdgeInsets.all(8.0),
       child: Row(
-    children: getDigits(_number, radix, digitCount, dynamicRange),
+    children: getDigits(_number, context, radix, digitCount, dynamicRange),
   ));
 }
 
 List<Widget> getDigits(
-    String number, int radix, int digitCount, bool dynamicRange) {
+    String number, BuildContext context, int radix,
+    int digitCount, bool dynamicRange) {
   int displaySize;
   bool negativeNumber = (int.tryParse(number)! < 0 && radix == 10);
   List<Widget> digitRow = <Widget>[];
@@ -25,11 +26,11 @@ List<Widget> getDigits(
 
   // minus symbol for negative numbers of radix 10
   if (negativeNumber) {
-    digitRow.add(Digit('-'));
+    digitRow.add(Digit('-', context));
   }
   // now the numbeere itself
   for (int i = negativeNumber ? 1 : 0; i <= displaySize; i++) {
-    digitRow.add(Digit(number[i]));
+    digitRow.add(Digit(number[i], context));
     digitRow.add(DigitSpacer());
   }
 
