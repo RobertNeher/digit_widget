@@ -3,7 +3,7 @@ import 'digit.dart';
 import 'digit_spacer.dart';
 
 Widget multiDigitDisplay(int number,
-    {int radix = 10, int digitCount = 0, bool dynamicRange = true}) {
+    {int radix = 10, int digitCount = 2, bool dynamicRange = false}) {
   String _number = number.toRadixString(radix).toUpperCase();
 
   return Container(
@@ -18,7 +18,6 @@ List<Widget> getDigits(
   int displaySize;
   bool negativeNumber = (int.tryParse(number)! < 0 && radix == 10);
   List<Widget> digitRow = <Widget>[];
-  RegExp onlyNumbers = RegExp(r'^[0-9\-]*$');
 
   displaySize = (dynamicRange && digitCount < number.length)
       ? digitCount - 1

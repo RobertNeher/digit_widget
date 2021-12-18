@@ -2,10 +2,27 @@ import 'package:flutter/material.dart';
 import 'digit.dart';
 
 class DigitSpacer extends StatefulWidget {
-  bool thousandGroup = true;
-  bool decimalPoint = true;
+  late bool thousandGroup;
+  late bool decimalPoint;
+  late double digitHeight;
+  late double barRadius;
+  late Color foreGroundColor;
+  late Color backGroundColor;
 
-  DigitSpacer({this.thousandGroup = false, this.decimalPoint = false});
+  DigitSpacer({
+    double height = BAR_HEIGHT,
+    bool thousandGroup = false,
+    bool decimalPoint = false,
+    Color foreGroundColor = FOREGROUND,
+    Color backGroundColor = BACKGROUND,
+  }) {
+    this.thousandGroup = false;
+    this.decimalPoint = false;
+    this.digitHeight = height / 3;
+    this.barRadius = height / 12;
+    this.backGroundColor = backGroundColor;
+    this.foreGroundColor = foreGroundColor;
+  }
 
   @override
   _DigitSpacerState createState() => _DigitSpacerState();
@@ -16,43 +33,47 @@ class _DigitSpacerState extends State<DigitSpacer> {
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
-        height: Digit.BAR_HEIGHT,
-        width: Digit.BAR_HEIGHT,
+        height: widget.digitHeight,
+        width: widget.digitHeight,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Digit.BAR_RADIUS),
-          color: widget.thousandGroup ? Digit.FOREGROUND : Digit.BACKGROUND,
+          borderRadius: BorderRadius.circular(widget.barRadius),
+          color: widget.thousandGroup
+              ? widget.foreGroundColor
+              : widget.backGroundColor,
         ),
       ),
       Container(
-        height: Digit.BAR_HEIGHT * Digit.WIDTH_FACTOR,
-        width: Digit.BAR_HEIGHT,
+        height: widget.digitHeight * WIDTH_FACTOR,
+        width: widget.digitHeight,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Digit.BAR_RADIUS),
-          color: Digit.BACKGROUND,
+          borderRadius: BorderRadius.circular(widget.barRadius),
+          color: widget.backGroundColor,
         ),
       ),
       Container(
-        height: Digit.BAR_HEIGHT,
-        width: Digit.BAR_HEIGHT,
+        height: widget.digitHeight,
+        width: widget.digitHeight,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Digit.BAR_RADIUS),
-          color: Digit.BACKGROUND,
+          borderRadius: BorderRadius.circular(widget.barRadius),
+          color: widget.backGroundColor,
         ),
       ),
       Container(
-        height: Digit.BAR_HEIGHT * Digit.WIDTH_FACTOR,
-        width: Digit.BAR_HEIGHT,
+        height: widget.digitHeight * WIDTH_FACTOR,
+        width: widget.digitHeight,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Digit.BAR_RADIUS),
-          color: Digit.BACKGROUND,
+          borderRadius: BorderRadius.circular(widget.barRadius),
+          color: widget.backGroundColor,
         ),
       ),
       Container(
-        height: Digit.BAR_HEIGHT,
-        width: Digit.BAR_HEIGHT,
+        height: widget.digitHeight,
+        width: widget.digitHeight,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Digit.BAR_RADIUS),
-          color: widget.decimalPoint ? Digit.FOREGROUND : Digit.BACKGROUND,
+          borderRadius: BorderRadius.circular(widget.barRadius),
+          color: widget.decimalPoint
+              ? widget.foreGroundColor
+              : widget.backGroundColor,
         ),
       ),
     ]);

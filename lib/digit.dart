@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
 
+const double BAR_HEIGHT = 30.0;
+const double WIDTH_FACTOR = 4.0;
+const Color FOREGROUND = Colors.red;
+const Color BACKGROUND = Colors.grey;
+
 class Digit extends StatefulWidget {
   ValueNotifier number = ValueNotifier<String>('0');
+  double digitHeight = 0;
+  late Color foreGroundColor;
+  late Color backGroundColor;
+  late double barRadius = 0;
 
-  Digit(String _number) {
+  Digit(String _number,
+      {double height = BAR_HEIGHT,
+      Color foreGroundColor = FOREGROUND,
+      Color backGroundColor = BACKGROUND,
+      double barRadius = 0}) {
     this.number.value = _number.toUpperCase()[_number.length - 1];
+    this.digitHeight = height / 3;
+    this.foreGroundColor = foreGroundColor;
+    this.backGroundColor = backGroundColor;
+    this.barRadius = height / 12;
   }
 
 /* ###0###    - Bar
@@ -45,22 +62,12 @@ class Digit extends StatefulWidget {
     '_': [false, false, false, false, false, false, true],
   };
 
-  static double BAR_HEIGHT = 30.0;
-  static double WIDTH_FACTOR = 4.0;
-  static double BAR_RADIUS = 8.0;
-  static Color FOREGROUND = Colors.red;
-  static Color BACKGROUND = Colors.grey;
-
   @override
   createState() => DigitState();
 }
 
 class DigitState extends State<Digit> {
   // TODO: Implement adaptive size.
-  // double barHeight = Digit.BAR_HEIGHT;
-  // double barWidthFactor = Digit.WIDTH_FACTOR;
-  // double barRadius = Digit.BAR_RADIUS;
-  // MediaQueryData? mqd;
   List<bool>? opacity = <bool>[];
   RegExp hexNumberSpace = RegExp(r'^[A-Fa-f0-9]+$');
 
@@ -86,69 +93,69 @@ class DigitState extends State<Digit> {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Bar(opacity![0]),
-              Body(opacity![1], opacity![2]),
-              Bar(opacity![3]),
-              Body(opacity![4], opacity![5]),
-              Bar(opacity![6]),
+              Bar(opacity![0], widget.digitHeight),
+              Body(opacity![1], opacity![2], widget.digitHeight),
+              Bar(opacity![3], widget.digitHeight),
+              Body(opacity![4], opacity![5], widget.digitHeight),
+              Bar(opacity![6], widget.digitHeight),
             ],
           );
         });
   }
 
-  Widget Bar(bool opacity) {
+  Widget Bar(bool opacity, double height) {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
-        height: Digit.BAR_HEIGHT,
-        width: Digit.BAR_HEIGHT,
+        height: height,
+        width: height,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Digit.BAR_RADIUS),
-          color: Digit.BACKGROUND,
+          borderRadius: BorderRadius.circular(widget.barRadius),
+          color: widget.backGroundColor,
         ),
       ),
       Container(
-        height: Digit.BAR_HEIGHT,
-        width: Digit.BAR_HEIGHT * Digit.WIDTH_FACTOR,
+        height: height,
+        width: height * WIDTH_FACTOR,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Digit.BAR_RADIUS),
-          color: opacity ? Digit.FOREGROUND : Digit.BACKGROUND,
+          borderRadius: BorderRadius.circular(widget.barRadius),
+          color: opacity ? widget.foreGroundColor : widget.backGroundColor,
         ),
       ),
       Container(
-        height: Digit.BAR_HEIGHT,
-        width: Digit.BAR_HEIGHT,
+        height: height,
+        width: height,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Digit.BAR_RADIUS),
-          color: Digit.BACKGROUND,
+          borderRadius: BorderRadius.circular(widget.barRadius),
+          color: widget.backGroundColor,
         ),
       ),
     ]);
   }
 
-  Widget Body(bool opacityLeft, bool opacityRight) {
+  Widget Body(bool opacityLeft, bool opacityRight, double height) {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
-        height: Digit.BAR_HEIGHT * Digit.WIDTH_FACTOR,
-        width: Digit.BAR_HEIGHT,
+        height: height * WIDTH_FACTOR,
+        width: height,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Digit.BAR_RADIUS),
-          color: opacityLeft ? Digit.FOREGROUND : Digit.BACKGROUND,
+          borderRadius: BorderRadius.circular(widget.barRadius),
+          color: opacityLeft ? widget.foreGroundColor : widget.backGroundColor,
         ),
       ),
       Container(
-        height: Digit.BAR_HEIGHT * Digit.WIDTH_FACTOR,
-        width: Digit.BAR_HEIGHT * Digit.WIDTH_FACTOR,
+        height: height * WIDTH_FACTOR,
+        width: height * WIDTH_FACTOR,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Digit.BAR_RADIUS),
-          color: Digit.BACKGROUND,
+          borderRadius: BorderRadius.circular(widget.barRadius),
+          color: widget.backGroundColor,
         ),
       ),
       Container(
-        height: Digit.BAR_HEIGHT * Digit.WIDTH_FACTOR,
-        width: Digit.BAR_HEIGHT,
+        height: height * WIDTH_FACTOR,
+        width: height,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Digit.BAR_RADIUS),
-          color: opacityRight ? Digit.FOREGROUND : Digit.BACKGROUND,
+          borderRadius: BorderRadius.circular(widget.barRadius),
+          color: opacityRight ? widget.foreGroundColor : widget.backGroundColor,
         ),
       ),
     ]);

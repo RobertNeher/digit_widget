@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:digit_widget/digit_spacer.dart';
 import 'package:digit_widget/multi_digit_display.dart';
+// import 'package:digit_widget/digit.dart';
 import 'package:flutter/material.dart';
-
-import 'digit.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,21 +32,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late Timer tick;
-  int number = 800;
+  int number = 0;
 
   @override
   void initState() {
     Random randomInt = Random();
-    tick = Timer.periodic(Duration(milliseconds: 75), (Timer t) {
+    tick = Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() {
-        number++; // = randomInt.nextInt(10000);
+        number++;
       });
     });
 
     super.initState();
 
     setState(() {
-      number = 950;
+      number = 0;
     });
   }
 
@@ -58,15 +56,10 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Row(children: [
-        Text(
-          number.toRadixString(10),
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 40,
-          ),
-        ),
-        Spacer(),
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+        // Digit(number.toRadixString(10), height:20, foreGroundColor: Colors.amber, backGroundColor: Colors.grey,),
         multiDigitDisplay(number, radix: 10),
       ]),
     );
