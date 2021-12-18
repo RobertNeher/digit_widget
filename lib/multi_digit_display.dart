@@ -31,7 +31,7 @@ List<Widget> getDigits(
   // now the numbeere itself
   for (int i = negativeNumber ? 1 : 0; i <= displaySize; i++) {
     digitRow.add(Digit(number[i], context));
-    digitRow.add(DigitSpacer());
+    digitRow.add(DigitSpacer(context));
   }
 
   // for (int i = digitRow.length; i >= 2; i--) {
