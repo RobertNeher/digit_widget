@@ -5,24 +5,24 @@ class DigitSpacer extends StatefulWidget {
   late BuildContext context;
   late bool thousandGroup;
   late bool decimalPoint;
-  late double digitHeight;
+  late double height;
   late double barRadius;
   late Color foreGroundColor;
   late Color backGroundColor;
 
   DigitSpacer(
     BuildContext context, {
-    double height = BAR_HEIGHT,
+    double height = 100,
     bool thousandGroup = false,
     bool decimalPoint = false,
     Color foreGroundColor = FOREGROUND,
     Color backGroundColor = BACKGROUND,
   }) {
     this.context = context;
-    this.thousandGroup = false;
-    this.decimalPoint = false;
-    this.digitHeight = height / 3;
-    this.barRadius = height / 12;
+    this.thousandGroup = thousandGroup;
+    this.decimalPoint = decimalPoint;
+    this.height = height;
+    this.barRadius = height / 35;
     this.backGroundColor = backGroundColor;
     this.foreGroundColor = foreGroundColor;
   }
@@ -37,7 +37,7 @@ class _DigitSpacerState extends State<DigitSpacer> {
   @override
   void initState() {
     size = MediaQuery.of(widget.context).size;
-    widget.digitHeight = size.height / 2;
+    widget.height = size.height / 2;
     super.initState();
   }
 
@@ -45,8 +45,8 @@ class _DigitSpacerState extends State<DigitSpacer> {
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
-        height: widget.digitHeight,
-        width: widget.digitHeight,
+        height: widget.height * BAR_HEIGHT_FACTOR,
+        width: widget.height * BAR_HEIGHT_FACTOR,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.barRadius),
           color: widget.thousandGroup
@@ -55,32 +55,32 @@ class _DigitSpacerState extends State<DigitSpacer> {
         ),
       ),
       Container(
-        height: widget.digitHeight * WIDTH_FACTOR,
-        width: widget.digitHeight,
+        height: widget.height * BODY_HEIGHT_FACTOR,
+        width: widget.height * BAR_HEIGHT_FACTOR,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.barRadius),
           color: widget.backGroundColor,
         ),
       ),
       Container(
-        height: widget.digitHeight,
-        width: widget.digitHeight,
+        height: widget.height * BAR_HEIGHT_FACTOR,
+        width: widget.height * BAR_HEIGHT_FACTOR,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.barRadius),
           color: widget.backGroundColor,
         ),
       ),
       Container(
-        height: widget.digitHeight * WIDTH_FACTOR,
-        width: widget.digitHeight,
+        height: widget.height * BODY_HEIGHT_FACTOR,
+        width: widget.height * BAR_HEIGHT_FACTOR,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.barRadius),
           color: widget.backGroundColor,
         ),
       ),
       Container(
-        height: widget.digitHeight,
-        width: widget.digitHeight,
+        height: widget.height * BAR_HEIGHT_FACTOR,
+        width: widget.height * BAR_HEIGHT_FACTOR,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.barRadius),
           color: widget.decimalPoint

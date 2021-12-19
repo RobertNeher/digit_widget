@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'digit.dart';
 import 'digit_spacer.dart';
 
-Widget multiDigitDisplay(int number, BuildContext context,
-    {int radix = 10, int digitCount = 2, bool dynamicRange = false}) {
+Widget multiDigitDisplay(BuildContext context, int number, double height,
+    {int radix = 10, int digitCount = 5, bool dynamicRange = false}) {
   String _number = number.toRadixString(radix).toUpperCase();
 
   return Container(
       // padding: const EdgeInsets.all(8.0),
-      child: Row(
-    children: getDigits(_number, context, radix, digitCount, dynamicRange),
-  ));
+    child: Row(
+        children: getDigits(
+            context, _number, height, radix, digitCount, dynamicRange)),
+  );
 }
 
-List<Widget> getDigits(
-    String number, BuildContext context, int radix,
+List<Widget> getDigits(BuildContext context, String number, double height,
+    int radix,
     int digitCount, bool dynamicRange) {
   int displaySize;
   bool negativeNumber = (int.tryParse(number)! < 0 && radix == 10);
@@ -24,25 +25,38 @@ List<Widget> getDigits(
       ? digitCount - 1
       : number.length - 1;
 
-  // minus symbol for negative numbers of radix 10
+  // sign for negative number of radix 10
   if (negativeNumber) {
-    digitRow.add(Digit('-', context));
-  }
-  // now the numbeere itself
-  for (int i = negativeNumber ? 1 : 0; i <= displaySize; i++) {
-    digitRow.add(Digit(number[i], context));
+    digitRow.add(Digit(
+      '-',
+      context,
+      height: height,
+    ));
     digitRow.add(DigitSpacer(context));
   }
 
-  // for (int i = digitRow.length; i >= 2; i--) {
-  //   if (i > 3 && i % 3 == 0) {
-  //     digitRow.insert(
-  //         i,
-  //         DigitSpacer(
-  //           thousandGroup: true,
-  //         ));
-  //   }
-  // }
+  // now the number itself
+  for (int i = 0; i < displaySize + (negativeNumber ? 0 : 1); i++) {
+    digitRow.add(Digit(
+      number[i],
+      context,
+      height: height,
+    ));
+    digitRow.add(DigitSpacer(
+      context,
+      height: height,
+    ));
+  }
 
+  // skip first spacer on most left side off digit row
+  for (int i = digitRow.length; i >= 0; i = i - 7) {
+    if (i - 7 > 0) {
+      digitRow[i - 7] = DigitSpacer(
+        context,
+        thousandGroup: true,
+        height: height,
+      );
+    }
+  }
   return digitRow;
 }

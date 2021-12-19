@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
-const double BAR_HEIGHT = 30.0;
-const double WIDTH_FACTOR = 4.0;
+const double BAR_HEIGHT = 70.0;
 const Color FOREGROUND = Colors.red;
 const Color BACKGROUND = Colors.grey;
+const double BODY_HEIGHT_FACTOR = 0.35;
+const double BODY_WIDTH_FACTOR = 0.5;
+const double BAR_HEIGHT_FACTOR = 0.1;
 
 class Digit extends StatefulWidget {
   ValueNotifier number = ValueNotifier<String>('0');
   late BuildContext context;
-  double digitHeight = 0;
+  double height = 0;
   late Color foreGroundColor;
   late Color backGroundColor;
   late double barRadius = 0;
@@ -20,10 +22,10 @@ class Digit extends StatefulWidget {
       double barRadius = 0}) {
     this.context = context;
     this.number.value = _number.toUpperCase()[_number.length - 1];
-    this.digitHeight = height / 3;
+    this.height = height;
     this.foreGroundColor = foreGroundColor;
     this.backGroundColor = backGroundColor;
-    this.barRadius = height / 12;
+    this.barRadius = height / 35;
   }
 
 /* ###0###    - Bar
@@ -69,14 +71,14 @@ class Digit extends StatefulWidget {
 }
 
 class DigitState extends State<Digit> {
-  late Size size;
+  // late Size size;
   List<bool>? opacity = <bool>[];
   RegExp hexNumberSpace = RegExp(r'^[A-Fa-f0-9]+$');
 
   @override
   void initState() {
-    size = MediaQuery.of(widget.context).size;
-    widget.digitHeight = size.height / 2;
+    // size = MediaQuery.of(widget.context).size;
+    // widget.height = size.height / 2;
     if (!hexNumberSpace.hasMatch(widget.number.value)) {
       opacity = Digit.digitBars[widget.number.value];
     } else {
@@ -91,40 +93,37 @@ class DigitState extends State<Digit> {
         valueListenable: widget.number,
         builder: (context, value, child) {
           opacity = Digit.digitBars[value];
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Bar(opacity![0], widget.digitHeight),
-              Body(opacity![1], opacity![2], widget.digitHeight),
-              Bar(opacity![3], widget.digitHeight),
-              Body(opacity![4], opacity![5], widget.digitHeight),
-              Bar(opacity![6], widget.digitHeight),
-            ],
-          );
+          return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Bar(opacity![0], widget.height),
+            Body(opacity![1], opacity![2], widget.height),
+            Bar(opacity![3], widget.height),
+            Body(opacity![4], opacity![5], widget.height),
+            Bar(opacity![6], widget.height),
+          ]);
         });
   }
 
   Widget Bar(bool opacity, double height) {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
-        height: height,
-        width: height,
+        height: widget.height * BAR_HEIGHT_FACTOR,
+        width: widget.height * BAR_HEIGHT_FACTOR,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.barRadius),
           color: widget.backGroundColor,
         ),
       ),
       Container(
-        height: height,
-        width: height * WIDTH_FACTOR,
+        height: widget.height * BAR_HEIGHT_FACTOR,
+        width: widget.height * BODY_WIDTH_FACTOR,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.barRadius),
           color: opacity ? widget.foreGroundColor : widget.backGroundColor,
         ),
       ),
       Container(
-        height: height,
-        width: height,
+        height: widget.height * BAR_HEIGHT_FACTOR,
+        width: widget.height * BAR_HEIGHT_FACTOR,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.barRadius),
           color: widget.backGroundColor,
@@ -136,29 +135,29 @@ class DigitState extends State<Digit> {
   Widget Body(bool opacityLeft, bool opacityRight, double height) {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
-        height: height * WIDTH_FACTOR,
-        width: height,
+        height: widget.height * BODY_HEIGHT_FACTOR,
+        width: widget.height * BAR_HEIGHT_FACTOR,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.barRadius),
           color: opacityLeft ? widget.foreGroundColor : widget.backGroundColor,
         ),
       ),
       Container(
-        height: height * WIDTH_FACTOR,
-        width: height * WIDTH_FACTOR,
+        height: widget.height * BODY_HEIGHT_FACTOR,
+        width: widget.height * BODY_WIDTH_FACTOR,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.barRadius),
           color: widget.backGroundColor,
         ),
       ),
       Container(
-        height: height * WIDTH_FACTOR,
-        width: height,
+        height: widget.height * BODY_HEIGHT_FACTOR,
+        width: widget.height * BAR_HEIGHT_FACTOR,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.barRadius),
           color: opacityRight ? widget.foreGroundColor : widget.backGroundColor,
         ),
-      ),
+      )
     ]);
   }
 }
