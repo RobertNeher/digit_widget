@@ -36,7 +36,6 @@ List<Widget> getDigits(BuildContext context, String number, double height,
 
   if (radix == 10) {
     for (int i = digitRow.length - 3; i > 0; i -= 3) {
-      // print('$number: $i');
       if (i != 3) {
         digitRow.insert(
             i,
@@ -51,6 +50,13 @@ List<Widget> getDigits(BuildContext context, String number, double height,
   // prefix '-' if negative number
   if (negativeNumber) {
     digitRow.insert(0, Digit('-', context, height: height));
+  }
+
+  // add distance between digits
+  for (int i = digitRow.length - 1; i >= 1; i--) {
+    if (digitRow[i] is Digit) {
+      digitRow.insert(i, DigitSpacer(context, height: height));
+    }
   }
   return digitRow;
 }
