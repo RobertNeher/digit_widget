@@ -17,22 +17,14 @@ Widget multiDigitDisplay(BuildContext context, int number,
 
 List<Widget> getDigits(BuildContext context, String number, double height,
     int radix, int digitCount) {
+  bool negativeNumber = (radix == 10 && int.parse(number) < 0);
   int displaySize = 0;
-  bool negativeNumber = (radix == 10 && (int.tryParse(number)! < 0));
   List<Widget> digitRow = <Widget>[];
 
   displaySize = digitCount == 0 ? number.length : digitCount;
 
-  if (negativeNumber) {
-    digitRow.add(Digit(
-      '-',
-      context,
-      height: height,
-    ));
-  }
-
   // now the number itself
-  for (int i = 0; i < displaySize; i++) {
+  for (int i = negativeNumber ? 1 : 0; i < displaySize; i++) {
     digitRow.add(
       Digit(
         number[i],
@@ -44,14 +36,21 @@ List<Widget> getDigits(BuildContext context, String number, double height,
 
   if (radix == 10) {
     for (int i = digitRow.length - 3; i > 0; i -= 3) {
-      digitRow.insert(
-          i,
-          DigitSpacer(
-            context,
-            height: height,
-            thousandGroup: true,
-          ));
+      // print('$number: $i');
+      if (i != 3) {
+        digitRow.insert(
+            i,
+            DigitSpacer(
+              context,
+              height: height,
+              thousandGroup: true,
+            ));
+      }
     }
+  }
+  // prefix '-' if negative number
+  if (negativeNumber) {
+    digitRow.insert(0, Digit('-', context, height: height));
   }
   return digitRow;
 }
