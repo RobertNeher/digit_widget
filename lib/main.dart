@@ -1,23 +1,22 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:digit_widget/multi_digit_display.dart';
-// import 'package:digit_widget/digit.dart';
+import 'digital_clock.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MyDigitShow());
 }
 
-class MyApp extends StatelessWidget {
+class MyDigitShow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Digit',
+      title: 'Digit Show',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Digit'),
+      home: MyHomePage(title: 'Flutter Digit Show'),
     );
   }
 }
@@ -36,29 +35,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    Random randomInt = Random();
-    tick = Timer.periodic(Duration(milliseconds: 1), (Timer t) {
+    tick = Timer.periodic(Duration(minutes: 1), (Timer t) {
       setState(() {
-        number++;
       });
     });
 
     super.initState();
-
-    setState(() {
-      number = 0;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body:
-        // Digit(number.toRadixString(10), height:20, foreGroundColor: Colors.amber, backGroundColor: Colors.grey,),
-          multiDigitDisplay(number, context, radix: 10),
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: FittedBox(
+            fit: BoxFit.fill,
+            child: digitalClock(context, DateTime.now(), height: 200)
+            // child: multiDigitDisplay(context, number,
+            //     height: 100, radix: 10, digitCount: 0),
+            )
     );
   }
 }

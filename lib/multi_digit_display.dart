@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'digit.dart';
-import 'digit_spacer.dart';
+import 'separator.dart';
 
-// if digitCount == 0, digit count is unlimited, if digitCount > 0 otherwise
+/// Displays digits aaccording to given radix and height
+/// Colors are pre-defined.
+/// The number of digits is unlimited by default (digitCount == 0)
+/// if digit count is a number greater zero, the width of the display may be limited.
 Widget multiDigitDisplay(BuildContext context, int number,
     {double height = 50, int radix = 10, int digitCount = 0}) {
   String _number = number.toRadixString(radix).toUpperCase();
@@ -39,7 +42,7 @@ List<Widget> getDigits(BuildContext context, String number, double height,
       if (i != 3) {
         digitRow.insert(
             i,
-            DigitSpacer(
+            Separator(
               context,
               height: height,
               thousandGroup: true,
@@ -55,7 +58,7 @@ List<Widget> getDigits(BuildContext context, String number, double height,
   // add distance between digits
   for (int i = digitRow.length - 1; i >= 1; i--) {
     if (digitRow[i] is Digit) {
-      digitRow.insert(i, DigitSpacer(context, height: height));
+      digitRow.insert(i, Separator(context, height: height));
     }
   }
   return digitRow;
