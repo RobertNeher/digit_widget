@@ -40,8 +40,8 @@ class _SeparatorState extends State<Separator> {
 
   @override
   void initState() {
-    size = MediaQuery.of(widget.context).size;
-    widget.height = size.height / 2;
+    // size = MediaQuery.of(widget.context).size;
+    // widget.height = height;
     super.initState();
   }
 
