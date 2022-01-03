@@ -37,17 +37,16 @@ List<Widget> getDigits(BuildContext context, String number, double height,
     );
   }
 
+  // Thousands grouping, if decimal numbers are expected
   if (radix == 10) {
     for (int i = digitRow.length - 3; i > 0; i -= 3) {
-      if (i != 3) {
-        digitRow.insert(
-            i,
-            Separator(
-              context,
-              height: height,
-              thousandGroup: true,
-            ));
-      }
+      digitRow.insert(
+          i,
+          Separator(
+            context,
+            height: height,
+            thousandGroup: true,
+          ));
     }
   }
   // prefix '-' if negative number
@@ -55,7 +54,7 @@ List<Widget> getDigits(BuildContext context, String number, double height,
     digitRow.insert(0, Digit('-', context, height: height));
   }
 
-  // add distance between digits
+  // add distance between digits for readability
   for (int i = digitRow.length - 1; i >= 1; i--) {
     if (digitRow[i] is Digit) {
       digitRow.insert(i, Separator(context, height: height));

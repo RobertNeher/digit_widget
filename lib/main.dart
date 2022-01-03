@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:digit_widget/multi_digit_display.dart';
-import 'digital_clock.dart';
+// import 'digital_clock.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,27 +16,28 @@ class MyDigitShow extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Digit Show'),
+      home: DigitWidget(title: 'Flutter Digit Demo Case'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+class DigitWidget extends StatefulWidget {
+  DigitWidget({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _DigitWidgetState createState() => _DigitWidgetState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _DigitWidgetState extends State<DigitWidget> {
   late Timer tick;
   int number = 0;
 
   @override
   void initState() {
-    tick = Timer.periodic(Duration(minutes: 1), (Timer t) {
+    tick = Timer.periodic(Duration(milliseconds: 1), (Timer t) {
       setState(() {
+        number += 1;
       });
     });
 
@@ -46,15 +47,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
           title: Text(widget.title),
         ),
         body: FittedBox(
-            fit: BoxFit.fill,
-            child: digitalClock(context, DateTime.now(), height: 200)
-            // child: multiDigitDisplay(context, number,
-            //     height: 100, radix: 10, digitCount: 0),
-            )
-    );
+          fit: BoxFit.fill,
+          // child: digitalClock(context, DateTime.now(), height: 200)
+          child: multiDigitDisplay(context, number,
+              height: 200, radix: 10, digitCount: 0),
+        ));
   }
 }

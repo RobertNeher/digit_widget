@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 const double BAR_HEIGHT = 70.0;
-const Color FOREGROUND = Colors.red;
-const Color BACKGROUND = Colors.grey;
+const Color FOREGROUND = Colors.blueGrey;
+const Color BACKGROUND = Colors.transparent;
 const double BODY_HEIGHT_FACTOR = 0.35;
 const double BODY_WIDTH_FACTOR = 0.5;
 const double BAR_HEIGHT_FACTOR = 0.1;
@@ -64,6 +64,7 @@ class Digit extends StatefulWidget {
     '-': [false, false, false, true, false, false, false],
     '=': [true, false, false, true, false, false, false],
     '_': [false, false, false, false, false, false, true],
+    'X': [false, true, true, true, true, true, false],
   };
 
   @override

@@ -1,8 +1,8 @@
 import 'package:digit_widget/separator.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'digit.dart';
 import 'colon.dart';
+import 'digit.dart';
 
 // if digitCount == 0, digit count is unlimited, if digitCount > 0 otherwise
 Widget digitalClock(BuildContext context, DateTime time, {double height = 50}) {

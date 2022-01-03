@@ -1,24 +1,27 @@
 name: digit_widget
-description: A new Flutter project.
+description: Widget set to display numbers of radix 10 (decimal), 16 (hexidecimal) or any other one
+# Widget "Digit" to display numbers of a specific radix:
+# -----------------------------------------------
+# 2: binary,
+# 10: decimal,
+# 16: hexidecimal
+# or any other, if you don't expect special characters, other than decimal number, A to F for hexidecimal numbers
+# special digits:
+#  * '<space>': all off
+#  * '=': (closest) to equal sign
+#  * '-': dash
+#  * '_': underscore
+#  * '[xX]': an "x" character
+#
+# Widget "Colon" to display a separator for e.g. time exposure of clocks, like '21:05'
+# Widget "Separator": Dedicated to improve readability of single digit within number rows
+# * decimalPoint: bool: Shows a decimal point
+# * thousand
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.15.0 <3.0.0"
 
 dependencies:
   flutter:
