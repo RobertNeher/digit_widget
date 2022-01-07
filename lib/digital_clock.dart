@@ -6,7 +6,7 @@ import 'digit.dart';
 
 // if digitCount == 0, digit count is unlimited, if digitCount > 0 otherwise
 Widget digitalClock(BuildContext context, DateTime time, {double height = 50}) {
-  DateFormat df = DateFormat('HH:mm');
+  DateFormat df = DateFormat('HH:mm:ss');
   String _timeString = df.format(time);
 
   return Container(

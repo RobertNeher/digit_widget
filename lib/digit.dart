@@ -6,6 +6,7 @@ const Color BACKGROUND = Colors.transparent;
 const double BODY_HEIGHT_FACTOR = 0.35;
 const double BODY_WIDTH_FACTOR = 0.5;
 const double BAR_HEIGHT_FACTOR = 0.1;
+const String DECIMAL_POINT = '.';
 
 class Digit extends StatefulWidget {
   ValueNotifier number = ValueNotifier<String>('0');
@@ -64,7 +65,7 @@ class Digit extends StatefulWidget {
     '-': [false, false, false, true, false, false, false],
     '=': [true, false, false, true, false, false, false],
     '_': [false, false, false, false, false, false, true],
-    'X': [false, true, true, true, true, true, false],
+    'X': [false, true, true, true, true, true, false], // in fact it is an "H"
   };
 
   @override
@@ -72,14 +73,11 @@ class Digit extends StatefulWidget {
 }
 
 class DigitState extends State<Digit> {
-  // late Size size;
   List<bool>? opacity = <bool>[];
   RegExp hexNumberSpace = RegExp(r'^[A-Fa-f0-9]+$');
 
   @override
   void initState() {
-    // size = MediaQuery.of(widget.context).size;
-    // widget.height = size.height / 2;
     if (!hexNumberSpace.hasMatch(widget.number.value)) {
       opacity = Digit.digitBars[widget.number.value];
     } else {
@@ -93,6 +91,7 @@ class DigitState extends State<Digit> {
     return ValueListenableBuilder(
         valueListenable: widget.number,
         builder: (context, value, child) {
+          print('$value: $opacity');
           opacity = Digit.digitBars[value];
           return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Bar(opacity![0], widget.height),

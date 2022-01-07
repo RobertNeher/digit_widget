@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:digit_widget/multi_digit_display.dart';
+import 'multi_digit_display.dart';
 // import 'digital_clock.dart';
 import 'package:flutter/material.dart';
 
@@ -30,16 +30,16 @@ class DigitWidget extends StatefulWidget {
 }
 
 class _DigitWidgetState extends State<DigitWidget> {
-  late Timer tick;
-  int number = 0;
+  // late Timer tick;
+  double number = -1234.56;
 
   @override
   void initState() {
-    tick = Timer.periodic(Duration(milliseconds: 1), (Timer t) {
-      setState(() {
-        number += 1;
-      });
-    });
+    // tick = Timer.periodic(Duration(milliseconds: 1), (Timer t) {
+    //   setState(() {
+    //     number += 1;
+    //   });
+    // });
 
     super.initState();
   }

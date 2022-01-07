@@ -2,35 +2,54 @@ import 'package:flutter/material.dart';
 import 'digit.dart';
 import 'separator.dart';
 
-/// Displays digits aaccording to given radix and height
+/// Displays digits according to given radix and height
 /// Colors are pre-defined.
 /// The number of digits is unlimited by default (digitCount == 0)
 /// if digit count is a number greater zero, the width of the display may be limited.
-Widget multiDigitDisplay(BuildContext context, int number,
+Widget multiDigitDisplay(BuildContext context, double number,
     {double height = 50, int radix = 10, int digitCount = 0}) {
-  String _number = number.toRadixString(radix).toUpperCase();
+  String _number = number.toString();
+  String _intPart = '', _fractPart = '', dp = '';
+
+  if (radix == 10) {
+    if (_number.contains('.')) {
+      dp = '.';
+    }
+    if (_number.contains(',')) {
+      dp = ',';
+    }
+
+    if (dp.isNotEmpty) {
+      _intPart = _number.split(dp)[0];
+      _fractPart = _number.split(dp)[1];
+    } else {
+      _intPart = number.toInt().toRadixString(radix).toUpperCase();
+    }
+  }
 
   return Container(
     padding: const EdgeInsets.all(8.0),
     child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: getDigits(context, _number, height, radix, digitCount)),
+        children: getDigits(
+            context, _intPart, _fractPart, height, radix, digitCount)),
   );
 }
 
-List<Widget> getDigits(BuildContext context, String number, double height,
-    int radix, int digitCount) {
-  bool negativeNumber = (radix == 10 && int.parse(number) < 0);
+List<Widget> getDigits(BuildContext context, String intPart, String fractPart,
+    double height, int radix, int digitCount) {
+  // bool negativeNumber = (radix == 10) ? (int.tryParse(intPart)! < 0) : false;
   int displaySize = 0;
   List<Widget> digitRow = <Widget>[];
 
-  displaySize = digitCount == 0 ? number.length : digitCount;
+  displaySize =
+      digitCount == 0 ? (intPart.length + fractPart.length + 1) : digitCount;
 
-  // now the number itself
-  for (int i = negativeNumber ? 1 : 0; i < displaySize; i++) {
+  // now the integer part itself, includes minus sign of negative number given
+  for (int i = 0; i < ((digitCount == 0) ? intPart.length : digitCount); i++) {
     digitRow.add(
       Digit(
-        number[i],
+        intPart[i],
         context,
         height: height,
       ),
@@ -49,9 +68,25 @@ List<Widget> getDigits(BuildContext context, String number, double height,
           ));
     }
   }
-  // prefix '-' if negative number
-  if (negativeNumber) {
-    digitRow.insert(0, Digit('-', context, height: height));
+
+  // now the fraction part itself (if any),  collection starts after '0.' of fraction part
+  // if (fractPart.isNotEmpty) {
+  digitRow.add(Separator(context,
+      height: height,
+      thousandGroup: false,
+      decimalPoint: true,
+      foreGroundColor: FOREGROUND,
+      backGroundColor: BACKGROUND));
+
+  for (int i = 0; i < fractPart.length; i++) {
+    digitRow.add(
+      Digit(
+        fractPart[i],
+        context,
+        height: height,
+      ),
+    );
+    // }
   }
 
   // add distance between digits for readability
