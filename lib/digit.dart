@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const double BAR_HEIGHT = 70.0;
-const Color FOREGROUND = Colors.blueGrey;
+const Color FOREGROUND = Colors.white;
 const Color BACKGROUND = Colors.transparent;
 const double BODY_HEIGHT_FACTOR = 0.35;
 const double BODY_WIDTH_FACTOR = 0.5;
@@ -91,7 +91,6 @@ class DigitState extends State<Digit> {
     return ValueListenableBuilder(
         valueListenable: widget.number,
         builder: (context, value, child) {
-          print('$value: $opacity');
           opacity = Digit.digitBars[value];
           return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Bar(opacity![0], widget.height),

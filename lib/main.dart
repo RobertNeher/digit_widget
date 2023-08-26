@@ -30,16 +30,20 @@ class DigitWidget extends StatefulWidget {
 }
 
 class _DigitWidgetState extends State<DigitWidget> {
-  // late Timer tick;
-  double number = -1234.56;
+  late Timer tick;
+  double number = 0;
+  int exp = 0;
 
   @override
   void initState() {
-    // tick = Timer.periodic(Duration(milliseconds: 1), (Timer t) {
-    //   setState(() {
-    //     number += 1;
-    //   });
-    // });
+    tick = Timer.periodic(Duration(milliseconds: 10), (Timer t) {
+      setState(() {
+        // exp = random.nextInt(5);
+        // number = random.nextDouble() * pow(10, exp);
+        // number = number.abs();
+        number++;
+      });
+    });
 
     super.initState();
   }
@@ -47,10 +51,10 @@ class _DigitWidgetState extends State<DigitWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.black,
           title: Text(widget.title),
         ),
         body: FittedBox(

@@ -38,12 +38,7 @@ Widget multiDigitDisplay(BuildContext context, double number,
 
 List<Widget> getDigits(BuildContext context, String intPart, String fractPart,
     double height, int radix, int digitCount) {
-  // bool negativeNumber = (radix == 10) ? (int.tryParse(intPart)! < 0) : false;
-  int displaySize = 0;
   List<Widget> digitRow = <Widget>[];
-
-  displaySize =
-      digitCount == 0 ? (intPart.length + fractPart.length + 1) : digitCount;
 
   // now the integer part itself, includes minus sign of negative number given
   for (int i = 0; i < ((digitCount == 0) ? intPart.length : digitCount); i++) {
